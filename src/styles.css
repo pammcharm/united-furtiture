@@ -77,6 +77,10 @@
     @apply accent-emerald-600;
   }
 
+  .filter-chip-grid {
+    @apply mt-3 grid max-h-44 gap-2 overflow-y-auto pr-1 text-sm text-zinc-600;
+  }
+
   .product-card {
     @apply overflow-hidden rounded-md border border-zinc-200 bg-white shadow-sm;
   }
@@ -97,8 +101,12 @@
     @apply relative min-h-[34rem] overflow-hidden rounded-md bg-zinc-950 text-white shadow-2xl shadow-zinc-950/20;
   }
 
+  .showroom-slider-large {
+    @apply min-h-[42rem];
+  }
+
   .showroom-slide {
-    @apply absolute inset-0 grid opacity-0 lg:grid-cols-[1.15fr_0.85fr];
+    @apply absolute inset-0 grid opacity-0 lg:grid-cols-[1.35fr_0.65fr];
   }
 
   .showroom-slide.is-active {
@@ -106,11 +114,11 @@
   }
 
   .showroom-slide img {
-    @apply h-full min-h-[22rem] w-full object-cover;
+    @apply h-full min-h-[26rem] w-full object-cover;
   }
 
   .showroom-caption {
-    @apply flex min-h-[22rem] flex-col justify-end bg-zinc-950 p-6 sm:p-8 lg:p-10;
+    @apply flex min-h-[26rem] flex-col justify-end bg-zinc-950 p-6 sm:p-8 lg:p-12;
   }
 
   .showroom-caption span {
@@ -118,7 +126,7 @@
   }
 
   .showroom-caption h3 {
-    @apply mt-3 text-3xl font-black tracking-tight sm:text-5xl;
+    @apply mt-3 text-3xl font-black tracking-tight sm:text-6xl;
   }
 
   .showroom-caption p {

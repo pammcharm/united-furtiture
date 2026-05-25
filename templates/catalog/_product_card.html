@@ -4,6 +4,12 @@
   data-product-name="{{ product.name }}"
   data-product-material="{{ product.material }}"
   data-product-category="{{ product.category }}"
+  data-product-color="{{ product.color }}"
+  data-product-size="{{ product.size }}"
+  data-product-type="{{ product.furniture_type }}"
+  data-product-tags="{{ product.tags }}"
+  data-product-custom="{{ product.custom_order_available|yesno:'yes,no' }}"
+  data-product-stock="{% if product.stock > 0 %}in-stock{% else %}sold-out{% endif %}"
   data-product-price="{{ product.price }}"
 >
   <a href="{% url 'catalog:product_detail' product.slug %}">

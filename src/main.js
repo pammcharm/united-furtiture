@@ -44,7 +44,12 @@ const runMarketplaceFilters = () => {
 
   const query = searchInput?.value.trim().toLowerCase() || "";
   const maxPrice = Number(priceRange?.value || Number.MAX_SAFE_INTEGER);
-  const checkedMaterials = [...document.querySelectorAll("[data-material]:checked")].map((item) => item.value);
+  const groupedFilters = [...document.querySelectorAll("[data-filter-field]:checked")].reduce((groups, input) => {
+    const field = input.dataset.filterField;
+    groups[field] ||= [];
+    groups[field].push(input.value.toLowerCase());
+    return groups;
+  }, {});
 
   const sortedCards = [...productCards].sort((a, b) => {
     const sort = sortSelect?.value || "featured";
@@ -58,13 +63,17 @@ const runMarketplaceFilters = () => {
 
   let visibleCount = 0;
   sortedCards.forEach((card) => {
-    const haystack = `${card.dataset.productName} ${card.dataset.productMaterial} ${card.dataset.productCategory}`.toLowerCase();
-    const material = card.dataset.productMaterial.toLowerCase();
+    const haystack =
+      `${card.dataset.productName} ${card.dataset.productMaterial} ${card.dataset.productCategory} ${card.dataset.productType} ${card.dataset.productColor} ${card.dataset.productSize} ${card.dataset.productTags}`.toLowerCase();
     const roomMatch = activeFilter === "all" || card.dataset.productRoom === activeFilter;
     const queryMatch = !query || haystack.includes(query);
     const priceMatch = Number(card.dataset.productPrice) <= maxPrice;
-    const materialMatch = checkedMaterials.length === 0 || checkedMaterials.some((item) => material.includes(item));
-    const visible = roomMatch && queryMatch && priceMatch && materialMatch;
+    const groupMatch = Object.entries(groupedFilters).every(([field, values]) => {
+      const datasetKey = `product${field.charAt(0).toUpperCase()}${field.slice(1)}`;
+      const target = (card.dataset[datasetKey] || "").toLowerCase();
+      return values.length === 0 || values.some((value) => target.includes(value));
+    });
+    const visible = roomMatch && queryMatch && priceMatch && groupMatch;
 
     if (visible) {
       visibleCount += 1;
@@ -94,14 +103,14 @@ document.querySelectorAll("[data-filter]").forEach((button) => {
 searchInput?.addEventListener("input", runMarketplaceFilters);
 sortSelect?.addEventListener("change", runMarketplaceFilters);
 priceRange?.addEventListener("input", runMarketplaceFilters);
-document.querySelectorAll("[data-material]").forEach((input) => input.addEventListener("change", runMarketplaceFilters));
+document.querySelectorAll("[data-filter-field]").forEach((input) => input.addEventListener("change", runMarketplaceFilters));
 document.querySelector("[data-clear-filters]")?.addEventListener("click", () => {
   activeFilter = "all";
   document.querySelectorAll("[data-filter]").forEach((item) => item.classList.toggle("is-active", item.dataset.filter === "all"));
   if (searchInput) searchInput.value = "";
   if (sortSelect) sortSelect.value = "featured";
   if (priceRange) priceRange.value = priceRange.max;
-  document.querySelectorAll("[data-material]").forEach((input) => {
+  document.querySelectorAll("[data-filter-field]").forEach((input) => {
     input.checked = false;
   });
   runMarketplaceFilters();

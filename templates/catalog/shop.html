@@ -47,8 +47,8 @@
       </select>
     </div>
 
-    <div class="mt-6 grid gap-6 lg:grid-cols-[18rem_1fr]">
-      <aside class="motion-card h-fit rounded-md border border-zinc-200 bg-stone-50 p-4">
+    <div class="mt-6 grid gap-6 lg:grid-cols-[20rem_1fr]">
+      <aside class="motion-card h-fit rounded-md border border-zinc-200 bg-stone-50 p-4 lg:sticky lg:top-24">
         <div class="flex items-center justify-between">
           <h2 class="font-black">Filters</h2>
           <button class="text-sm font-bold text-emerald-700" data-clear-filters type="button">Clear</button>
@@ -64,10 +64,49 @@
           </div>
           <div>
             <h3 class="text-sm font-bold text-zinc-700">Material</h3>
+            <div class="filter-chip-grid">
+              {% for item in filter_options.materials %}
+              <label class="check-row"><input data-filter-field="material" value="{{ item|lower }}" type="checkbox"> {{ item }}</label>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-700">Furniture type</h3>
+            <div class="filter-chip-grid">
+              {% for item in filter_options.types %}
+              <label class="check-row"><input data-filter-field="type" value="{{ item|lower }}" type="checkbox"> {{ item }}</label>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-700">Color</h3>
+            <div class="filter-chip-grid">
+              {% for item in filter_options.colors %}
+              <label class="check-row"><input data-filter-field="color" value="{{ item|lower }}" type="checkbox"> {{ item }}</label>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-700">Size</h3>
+            <div class="filter-chip-grid">
+              {% for item in filter_options.sizes %}
+              <label class="check-row"><input data-filter-field="size" value="{{ item|lower }}" type="checkbox"> {{ item }}</label>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-700">Tags</h3>
+            <div class="filter-chip-grid">
+              {% for item in filter_options.tags %}
+              <label class="check-row"><input data-filter-field="tags" value="{{ item|lower }}" type="checkbox"> {{ item }}</label>
+              {% endfor %}
+            </div>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-zinc-700">Availability</h3>
             <div class="mt-3 grid gap-2 text-sm text-zinc-600">
-              <label class="check-row"><input data-material value="velvet" type="checkbox"> Velvet</label>
-              <label class="check-row"><input data-material value="wood" type="checkbox"> Wood</label>
-              <label class="check-row"><input data-material value="walnut" type="checkbox"> Walnut</label>
+              <label class="check-row"><input data-filter-field="stock" value="in-stock" type="checkbox"> In stock</label>
+              <label class="check-row"><input data-filter-field="custom" value="yes" type="checkbox"> Custom order</label>
             </div>
           </div>
           <div class="rounded-md bg-zinc-950 p-4 text-white">
