@@ -1,0 +1,40 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | United Furniture Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="icon" type="image/png" sizes="512x512" href="{% static 'brand/favicon.png' %}">
+<link rel="apple-touch-icon" sizes="180x180" href="{% static 'brand/apple-touch-icon.png' %}">
+<link rel="manifest" href="{% static 'brand/site.webmanifest' %}">
+<meta name="theme-color" content="#059669">
+<link rel="stylesheet" href="{% static 'admin/css/united_admin.css' %}">
+{% endblock %}
+
+{% block branding %}
+<div id="site-name" class="united-brand">
+  <span class="united-brand-mark">
+    <img src="{% static 'brand/logo.png' %}" alt="United Furniture logo">
+  </span>
+  <a href="{% url 'admin:index' %}">United Furniture Admin</a>
+</div>
+{% endblock %}
+
+{% block usertools %}
+{% if has_permission %}
+<div class="united-user-menu">
+  <span class="united-user-chip">Signed in as <strong>{{ user.get_username }}</strong></span>
+  <a href="{% url 'pages:home' %}">View Storefront</a>
+  <a href="{% url 'admin:password_change' %}">Change Password</a>
+  <form id="logout-form" method="post" action="{% url 'admin:logout' %}">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}

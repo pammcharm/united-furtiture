@@ -1,0 +1,80 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_dashboard %}
+
+{% block content %}
+{% united_admin_stats as stats %}
+<div class="united-admin-shell">
+  <section class="united-admin-hero">
+    <div>
+      <span class="united-eyebrow">Business control center</span>
+      <h1>Manage United Furniture</h1>
+      <p>Products, categories, orders, delivery areas, payment methods, customers, staff, and business settings are all protected inside Django admin.</p>
+    </div>
+    <div class="united-hero-actions">
+      <a href="{% url 'admin:catalog_product_add' %}">+ Add Product</a>
+      <a href="{% url 'admin:orders_order_changelist' %}">View Orders →</a>
+      <a href="{% url 'admin:businesses_business_changelist' %}">Edit Business →</a>
+    </div>
+  </section>
+
+  <section class="united-stat-grid">
+    <article>
+      <span>Total Products</span>
+      <strong>{{ stats.products }}</strong>
+      <small>{{ stats.active_products }} active in shop</small>
+    </article>
+    <article>
+      <span>Pending Orders</span>
+      <strong>{{ stats.pending_orders }}</strong>
+      <small>{{ stats.orders }} total orders</small>
+    </article>
+    <article>
+      <span>Categories</span>
+      <strong>{{ stats.categories }}</strong>
+      <small>Furniture catalog groups</small>
+    </article>
+    <article>
+      <span>Recorded Sales</span>
+      <strong>{{ stats.sales|floatformat:0 }} RWF</strong>
+      <small>From order items</small>
+    </article>
+  </section>
+
+  <section class="united-admin-grid">
+    <div class="united-panel united-quick-panel">
+      <div class="united-panel-heading">
+        <div>
+          <span class="united-eyebrow">Quick actions</span>
+          <h2>Daily work</h2>
+        </div>
+      </div>
+      <div class="united-action-grid">
+        <a href="{% url 'admin:catalog_product_add' %}"><strong>+ Add product</strong><span>Upload furniture details, price, stock, and image URL.</span></a>
+        <a href="{% url 'admin:catalog_category_add' %}"><strong>+ Add category</strong><span>Create sofas, beds, dining, office, decor, and more.</span></a>
+        <a href="{% url 'admin:catalog_product_changelist' %}"><strong>Manage catalog →</strong><span>Edit products, feature items, or mark stock status.</span></a>
+        <a href="{% url 'admin:orders_order_changelist' %}"><strong>Process orders →</strong><span>Confirm, prepare, deliver, or cancel customer orders.</span></a>
+        <a href="{% url 'admin:shipping_deliveryarea_changelist' %}"><strong>Delivery areas →</strong><span>Set pickup, Kigali delivery, and outside-city fees.</span></a>
+        <a href="{% url 'admin:payments_paymentmethod_changelist' %}"><strong>Payment methods →</strong><span>Manage cash, bank transfer, and mobile money references.</span></a>
+        <a href="{% url 'admin:businesses_business_changelist' %}"><strong>Business settings →</strong><span>Update WhatsApp, location, currency, and hero image.</span></a>
+        <a href="{% url 'admin:auth_user_changelist' %}"><strong>Staff accounts →</strong><span>Create users and control admin access permissions.</span></a>
+      </div>
+    </div>
+
+    <div class="united-panel united-model-panel">
+      <div class="united-panel-heading">
+        <div>
+          <span class="united-eyebrow">Editable areas</span>
+          <h2>All admin cards</h2>
+        </div>
+      </div>
+      {% if app_list %}
+        {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+      {% else %}
+        <p>{% translate "You don't have permission to view or edit anything." %}</p>
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block sidebar %}{% endblock %}

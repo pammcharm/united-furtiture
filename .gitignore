@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+db.sqlite3
+staticfiles/
+django.out.log
+django.err.log
+vite.out.log
+vite.err.log
+node_modules/

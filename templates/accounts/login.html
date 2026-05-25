@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}Login - {{ business.name }}{% endblock %}
+
+{% block content %}
+<section class="bg-zinc-950 pt-28 text-white">
+  <div class="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+    <p class="text-sm font-black uppercase tracking-[0.18em] text-emerald-300">Welcome back</p>
+    <h1 class="mt-3 max-w-3xl text-4xl font-black tracking-tight sm:text-6xl">Login to reuse your saved details.</h1>
+  </div>
+</section>
+<section class="bg-white py-12">
+  <div class="mx-auto max-w-xl px-4 sm:px-6 lg:px-8">
+    <form method="post" class="motion-card grid gap-4 rounded-md border border-zinc-200 bg-stone-50 p-5">
+      {% csrf_token %}
+      {% include "accounts/_form_errors.html" %}
+      <label class="form-label">Username {{ form.username }}</label>
+      <label class="form-label">Password {{ form.password }}</label>
+      <button class="btn-dark" type="submit">Login</button>
+      <a href="{% url 'accounts:signup' %}" class="text-sm font-bold text-emerald-700">Create a customer account</a>
+    </form>
+  </div>
+</section>
+{% endblock %}

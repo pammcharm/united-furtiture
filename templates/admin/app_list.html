@@ -1,0 +1,28 @@
+{% load i18n %}
+
+<div class="united-model-grid">
+  {% for app in app_list %}
+    {% for model in app.models %}
+      <article class="united-model-card">
+        <div>
+          <span>{{ app.name }}</span>
+          {% if model.admin_url %}
+            <a class="united-model-title" href="{{ model.admin_url }}">{{ model.name }}</a>
+          {% else %}
+            <strong class="united-model-title">{{ model.name }}</strong>
+          {% endif %}
+        </div>
+        <div class="united-model-actions">
+          {% if model.add_url %}
+            <a class="united-add" href="{{ model.add_url }}">+ {% translate "Add" %}</a>
+          {% endif %}
+          {% if model.admin_url and show_changelinks %}
+            <a class="united-change" href="{{ model.admin_url }}">
+              {% if model.view_only %}{% translate "View" %}{% else %}{% translate "Edit" %}{% endif %} →
+            </a>
+          {% endif %}
+        </div>
+      </article>
+    {% endfor %}
+  {% endfor %}
+</div>

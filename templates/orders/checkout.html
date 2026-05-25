@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - {{ business.name }}{% endblock %}
+
+{% block content %}
+<section class="bg-zinc-950 pt-28 text-white">
+  <div class="mx-auto max-w-7xl px-4 pb-10 sm:px-6 lg:px-8">
+    <p class="text-sm font-black uppercase tracking-[0.18em] text-emerald-300">Place order</p>
+    <h1 class="mt-3 max-w-3xl text-4xl font-black tracking-tight sm:text-6xl">Send a clear order request to United Furniture.</h1>
+  </div>
+</section>
+
+<section class="bg-white pb-16 pt-8 sm:pb-20">
+  <div class="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[1fr_0.8fr] lg:px-8">
+    <div>
+      <div class="order-steps motion-card">
+        <span class="is-active">1. Details</span>
+        <span>2. Delivery</span>
+        <span>3. Confirm</span>
+      </div>
+      <form method="post" class="motion-card mt-5 grid gap-5 rounded-md border border-zinc-200 bg-stone-50 p-5" data-order-form>
+        {% csrf_token %}
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="form-label">Full name<input class="field" name="customer_name" data-order-name placeholder="Your name" value="{% if request.user.is_authenticated %}{{ request.user.get_full_name|default:request.user.username }}{% endif %}" required></label>
+          <label class="form-label">Phone number<input class="field" name="phone_number" data-order-phone placeholder="+250 ..." value="{{ checkout_profile.phone_number|default:'' }}" required></label>
+        </div>
+        <label class="form-label">Delivery location
+          <div class="grid gap-2 sm:grid-cols-[1fr_auto]">
+            <input class="field" name="delivery_location" data-order-location placeholder="Kigali, street, house number" value="{{ checkout_profile.delivery_location|default:'' }}">
+            <button class="btn-dark" data-use-location type="button"><i data-lucide="locate-fixed" class="size-4"></i> Use my location</button>
+          </div>
+        </label>
+        <div class="rounded-md border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-950" data-shipping-estimate>
+          Enter your location to see delivery fee and estimated shipping time.
+        </div>
+        <div>
+          <span class="form-label">Delivery method</span>
+          <div class="mt-2 grid gap-3 sm:grid-cols-3">
+            <label class="option-card is-active"><input name="delivery" value="Pickup from showroom" type="radio" checked> <i data-lucide="store" class="size-5"></i><strong>Pickup</strong><small>Free</small></label>
+            <label class="option-card"><input name="delivery" value="Delivery in Kigali" type="radio"> <i data-lucide="truck" class="size-5"></i><strong>Kigali</strong><small>10,000 RWF</small></label>
+            <label class="option-card"><input name="delivery" value="Delivery outside Kigali" type="radio"> <i data-lucide="map-pin" class="size-5"></i><strong>Outside</strong><small>Confirm fee</small></label>
+          </div>
+        </div>
+        <div>
+          <span class="form-label">Payment</span>
+          <div class="mt-2 grid gap-3 sm:grid-cols-3">
+            <label class="option-card is-active"><input name="payment" value="Cash on delivery" type="radio" checked> <i data-lucide="banknote" class="size-5"></i><strong>Cash</strong><small>On delivery</small></label>
+            <label class="option-card"><input name="payment" value="Bank transfer" type="radio"> <i data-lucide="landmark" class="size-5"></i><strong>Bank</strong><small>Reference</small></label>
+            <label class="option-card"><input name="payment" value="Mobile money" type="radio"> <i data-lucide="smartphone" class="size-5"></i><strong>MoMo</strong><small>Manual</small></label>
+          </div>
+        </div>
+        <label class="form-label">Order notes<textarea class="field min-h-28 py-3" name="notes" data-order-notes placeholder="Color preference, room size, delivery time...">{{ checkout_profile.notes|default:'' }}</textarea></label>
+        <div class="grid gap-3 sm:grid-cols-2">
+          <button class="btn-dark" type="submit"><i data-lucide="save" class="size-4"></i> Save order</button>
+          <a class="btn-primary" data-order-whatsapp href="{{ whatsapp_url }}"><i data-lucide="send" class="size-4"></i> WhatsApp order</a>
+        </div>
+      </form>
+    </div>
+    <aside class="motion-card h-fit rounded-md bg-zinc-950 p-5 text-white">
+      <h2 class="text-xl font-black">What happens next?</h2>
+      <div class="mt-5 space-y-3 text-sm text-zinc-300">
+        <p class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 size-4 text-emerald-300"></i> We confirm availability and exact delivery fee.</p>
+        <p class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 size-4 text-emerald-300"></i> You receive payment instructions if needed.</p>
+        <p class="flex items-start gap-2"><i data-lucide="check" class="mt-0.5 size-4 text-emerald-300"></i> Delivery or pickup time is scheduled.</p>
+      </div>
+      <div class="mt-6 rounded-md bg-white/10 p-4">
+        <span class="text-xs uppercase tracking-[0.18em] text-emerald-300">Fast support</span>
+        <strong class="mt-2 block text-2xl">WhatsApp first</strong>
+        <p class="mt-2 text-sm leading-6 text-zinc-300">Best for furniture because customers often need delivery, size, and color confirmation.</p>
+      </div>
+    </aside>
+  </div>
+</section>
+{{ delivery_areas|json_script:"delivery-areas-data" }}
+{% endblock %}

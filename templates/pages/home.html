@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}United Furniture - Premium Furniture Store in Rwanda{% endblock %}
+{% block meta_description %}Shop premium sofas, beds, dining sets, office furniture, and home decor from United Furniture in Rwanda. Order fast through WhatsApp and arrange pickup or delivery.{% endblock %}
+{% block og_title %}United Furniture - Premium Furniture Store in Rwanda{% endblock %}
+{% block og_description %}Modern furniture catalog, showroom gallery, delivery options, and direct WhatsApp ordering from United Furniture.{% endblock %}
+
+{% block content %}
+<section class="relative min-h-[90vh] overflow-hidden bg-zinc-950 text-white">
+  <img class="absolute inset-0 h-full w-full object-cover opacity-55" src="{{ business.hero_image }}" alt="Modern living room furniture">
+  <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(9,9,11,0.96),rgba(9,9,11,0.68),rgba(9,9,11,0.2))]"></div>
+  <div class="relative mx-auto grid min-h-[90vh] max-w-7xl content-end px-4 pb-16 pt-28 sm:px-6 lg:px-8">
+    <div class="max-w-3xl">
+      <p class="hero-reveal mb-5 inline-flex items-center gap-2 rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-emerald-100 ring-1 ring-white/15">
+        <i data-lucide="sparkles" class="size-4"></i>
+        Online catalog and WhatsApp ordering
+      </p>
+      <h1 class="hero-reveal text-5xl font-black leading-[0.95] sm:text-7xl">{{ business.name }}</h1>
+      <p class="hero-reveal mt-6 max-w-2xl text-lg leading-8 text-zinc-200">
+        Premium sofas, beds, dining sets, and office furniture with fast ordering direct through WhatsApp.
+      </p>
+      <div class="hero-reveal mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="{% url 'catalog:shop' %}" class="btn-primary">Shop furniture <i data-lucide="arrow-right" class="size-4"></i></a>
+        <a href="{{ whatsapp_url }}" class="btn-light">Order on WhatsApp <i data-lucide="message-circle" class="size-4"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-16 sm:py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="section-label">Featured products</p>
+        <h2 class="section-title">Furniture ready for your home</h2>
+      </div>
+      <a href="{% url 'catalog:shop' %}" class="btn-dark">View shop <i data-lucide="store" class="size-4"></i></a>
+    </div>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {% for product in featured_products %}
+        {% include "catalog/_product_card.html" %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="showroom" class="bg-white py-16 sm:py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="section-label">Showroom gallery</p>
+        <h2 class="section-title">See how each piece feels at home.</h2>
+      </div>
+      <a href="{{ whatsapp_url }}" class="btn-dark">Ask for availability <i data-lucide="message-circle" class="size-4"></i></a>
+    </div>
+
+    <div class="showroom-slider motion-card mt-8" data-slider>
+      {% for product in featured_products %}
+      <article class="showroom-slide{% if forloop.first %} is-active{% endif %}" data-slide>
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        <div class="showroom-caption">
+          <span>{{ product.category }}</span>
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.material }} - {{ product.size }} - {{ product.formatted_price }}</p>
+          <a href="{{ product.whatsapp_url }}" class="btn-primary">Order this piece <i data-lucide="arrow-right" class="size-4"></i></a>
+        </div>
+      </article>
+      {% endfor %}
+
+      <div class="showroom-thumbs" aria-label="Showroom images">
+        {% for product in featured_products %}
+        <button class="showroom-thumb{% if forloop.first %} is-active{% endif %}" data-slide-dot="{{ forloop.counter0 }}" aria-label="Show {{ product.name }}">
+          <img src="{{ product.image_url }}" alt="">
+        </button>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,95 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block meta_description %}United Furniture offers premium sofas, beds, dining sets, office furniture, home decor, delivery, and fast WhatsApp ordering in Rwanda.{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}United Furniture, furniture Rwanda, furniture Kigali, sofas Rwanda, beds Rwanda, dining tables Kigali, office furniture, WhatsApp furniture ordering{% endblock %}">
+    <meta name="author" content="{{ business.name }}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{% block canonical_url %}{{ site_url }}{{ request.path }}{% endblock %}">
+    <link rel="icon" type="image/png" sizes="512x512" href="{% static 'brand/favicon.png' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'brand/apple-touch-icon.png' %}">
+    <link rel="manifest" href="{% static 'brand/site.webmanifest' %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:site_name" content="{{ business.name }}">
+    <meta property="og:title" content="{% block og_title %}{{ business.name }} - Premium Furniture in Rwanda{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Shop premium sofas, beds, dining sets, office furniture, and home decor from United Furniture with fast WhatsApp ordering.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ site_url }}{% static 'brand/logo.png' %}{% endblock %}">
+    <meta property="og:url" content="{{ site_url }}{{ request.path }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ business.name }} - Premium Furniture{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Modern furniture catalog with WhatsApp ordering, delivery options, and showroom support.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ site_url }}{% static 'brand/logo.png' %}{% endblock %}">
+    <meta name="theme-color" content="#059669">
+    <title>{% block title %}{{ business.name }}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'dist/app.css' %}">
+    {% block structured_data %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FurnitureStore",
+        "name": "{{ business.name }}",
+        "url": "{{ site_url }}",
+        "logo": "{{ site_url }}{% static 'brand/logo.png' %}",
+        "image": "{{ business.hero_image }}",
+        "address": "{{ business.location }}",
+        "telephone": "+{{ business.whatsapp_number }}",
+        "priceRange": "{{ business.currency }}",
+        "sameAs": []
+      }
+    </script>
+    {% endblock %}
+  </head>
+  <body class="bg-stone-50 text-zinc-950">
+    <header class="fixed inset-x-0 top-0 z-50 border-b border-white/15 bg-zinc-950/75 text-white backdrop-blur-xl">
+      <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <a href="{% url 'pages:home' %}" class="flex items-center gap-3" aria-label="{{ business.name }} home">
+          <span class="brand-logo-shell">
+            <img src="{% static 'brand/logo.png' %}" alt="{{ business.name }} logo">
+          </span>
+          <span class="leading-tight">
+            <span class="block text-sm font-semibold uppercase tracking-[0.18em] text-emerald-200">{{ business.short_name }}</span>
+            <span class="block text-base font-bold">Furniture</span>
+          </span>
+        </a>
+        <div class="hidden items-center gap-7 md:flex">
+          <a href="{% url 'catalog:shop' %}" class="nav-link">Shop</a>
+          <a href="{% url 'pages:home' %}#showroom" class="nav-link">Showroom</a>
+          <a href="{% url 'cart:detail' %}" class="nav-link">Cart</a>
+          {% if request.user.is_authenticated %}
+            <a href="{% url 'accounts:profile' %}" class="nav-link">Account</a>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" class="nav-link">Login</a>
+          {% endif %}
+        </div>
+        <a href="{{ whatsapp_url }}" class="btn-primary">
+          <i data-lucide="message-circle" class="size-4"></i>
+          WhatsApp
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      {% if messages %}
+      <div class="fixed right-4 top-20 z-[60] grid gap-2">
+        {% for message in messages %}
+        <div class="rounded-md border border-emerald-200 bg-white px-4 py-3 text-sm font-bold text-zinc-900 shadow-lg">
+          {{ message }}
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+      {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-zinc-950 py-8 text-white">
+      <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm text-zinc-300 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <span>{{ business.name }} - {{ business.location }}</span>
+        <span>Catalog, WhatsApp ordering, dashboard ready.</span>
+      </div>
+    </footer>
+    <script type="module" src="{% static 'dist/app.js' %}"></script>
+  </body>
+</html>
