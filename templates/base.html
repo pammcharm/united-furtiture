@@ -37,7 +37,7 @@
         "address": "{{ business.location }}",
         "telephone": "+{{ business.whatsapp_number }}",
         "priceRange": "{{ business.currency }}",
-        "sameAs": []
+        "sameAs": ["{{ business.instagram_url }}"]
       }
     </script>
     {% endblock %}
@@ -86,8 +86,11 @@
 
     <footer class="bg-zinc-950 py-8 text-white">
       <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm text-zinc-300 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
-        <span>{{ business.name }} - {{ business.location }}</span>
-        <span>Catalog, WhatsApp ordering, dashboard ready.</span>
+        <span>{{ business.name }} - {{ business.location }} - {{ business.phone_numbers }}</span>
+        <span class="flex flex-wrap gap-3">
+          <a class="font-bold text-emerald-300" href="{{ business.instagram_url }}" target="_blank" rel="noopener">Instagram</a>
+          <span>Catalog, WhatsApp ordering, dashboard ready.</span>
+        </span>
       </div>
     </footer>
     <script type="module" src="{% static 'dist/app.js' %}"></script>

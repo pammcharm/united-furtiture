@@ -15,7 +15,8 @@ class Command(BaseCommand):
             defaults={
                 "name": "United Furniture",
                 "logo_url": "/static/brand/logo.png",
-                "whatsapp_number": "250780000000",
+                "whatsapp_number": "250785211404",
+                "instagram_url": "https://www.instagram.com/unitedfurniture_rwanda/?hl=en",
                 "location": "Kigali showroom",
                 "currency": "RWF",
                 "primary_color": "#10b981",

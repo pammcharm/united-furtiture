@@ -199,7 +199,7 @@ document.querySelectorAll(".option-card").forEach((card) => {
 
 const orderForm = document.querySelector("[data-order-form]");
 const orderWhatsapp = document.querySelector("[data-order-whatsapp]");
-const whatsappPhone = "250780000000";
+const whatsappPhone = "250785211404";
 const locationInput = document.querySelector("[data-order-location]");
 const shippingEstimate = document.querySelector("[data-shipping-estimate]");
 const deliveryAreasScript = document.querySelector("#delivery-areas-data");
