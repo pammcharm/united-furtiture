@@ -48,14 +48,14 @@
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
     <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
       <div>
-        <p class="section-label">Showroom gallery</p>
-        <h2 class="section-title">See how each piece feels at home.</h2>
+        <p class="section-label">Premium showroom</p>
+        <h2 class="section-title">Our best high-end pieces on display.</h2>
       </div>
       <a href="{{ whatsapp_url }}" class="btn-dark">Ask for availability <i data-lucide="message-circle" class="size-4"></i></a>
     </div>
 
     <div class="showroom-slider motion-card mt-8" data-slider>
-      {% for product in featured_products %}
+      {% for product in showroom_products %}
       <article class="showroom-slide{% if forloop.first %} is-active{% endif %}" data-slide>
         <img src="{{ product.image_url }}" alt="{{ product.name }}">
         <div class="showroom-caption">
@@ -68,7 +68,7 @@
       {% endfor %}
 
       <div class="showroom-thumbs" aria-label="Showroom images">
-        {% for product in featured_products %}
+        {% for product in showroom_products %}
         <button class="showroom-thumb{% if forloop.first %} is-active{% endif %}" data-slide-dot="{{ forloop.counter0 }}" aria-label="Show {{ product.name }}">
           <img src="{{ product.image_url }}" alt="">
         </button>

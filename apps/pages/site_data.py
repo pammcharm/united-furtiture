@@ -131,11 +131,22 @@ def site_context():
     else:
         products = [{**product, "formatted_price": money(product["price"]), "whatsapp_url": whatsapp_url(product)} for product in PRODUCTS]
 
+    showroom_products = sorted(
+        products,
+        key=lambda product: (
+            "premium" not in product.get("tags", "").lower(),
+            -product["price"],
+        ),
+    )[:8]
+    if len(showroom_products) < 4:
+        showroom_products = sorted(products, key=lambda product: -product["price"])[:8]
+
     return {
         "business": current_business,
         "categories": categories,
         "products": products,
         "featured_products": products[:4],
+        "showroom_products": showroom_products,
         "whatsapp_url": whatsapp_url(),
         "site_url": "http://localhost:8000",
     }
