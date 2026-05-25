@@ -14,3 +14,12 @@ class CustomerProfile(models.Model):
 
     def __str__(self):
         return f"{self.user.get_username()} profile"
+
+
+class AdminPasswordResetRequired(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="admin_password_reset_required")
+    required = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.get_username()} password reset required"
